@@ -1,3 +1,5 @@
+import re
+
 def parse_log(filepath):
     entries = []
 
@@ -6,16 +8,22 @@ def parse_log(filepath):
             for line in file:
                 line = line.strip()
 
-                if len(line.split()) < 13:
+                if "Failed password" not in line and "Accepted password" not in line:
                     continue
 
-                parts = line.split()
+                ip_match = re.search(r'from (\d+\.\d+\.\d+\.\d+)', line)
+                user_match = re.search(r'for (?:invalid user )?(\w+) from', line)
+                time_match = re.search(r'^(\w+\s+\d+\s+[\d:]+)', line)
+
+                if not ip_match or not user_match or not time_match:
+                    print(f"Warning: skipping malformed line: {line}")
+                    continue
 
                 entry = {
-                    "timestamp": f"{parts[0]} {parts[1]} {parts[2]}",
+                    "timestamp": time_match.group(1),
                     "status": "failed" if "Failed password" in line else "accepted",
-                    "user": parts[10] if "invalid user" in line else parts[8],
-                    "ip": parts[12] if "Failed password" in line else parts[10],
+                    "user": user_match.group(1),
+                    "ip": ip_match.group(1),
                     "raw": line
                 }
 
@@ -27,11 +35,11 @@ def parse_log(filepath):
     return entries
 
 """
-**What each part does:**
+**What changed and why:**
 
-- `parse_log(filepath)` — takes a file path and returns a list of log entries
-- `entries = []` — we'll collect every parsed line in here as a dictionary
-- `entry = {...}` — each line becomes a dictionary with timestamp, status, user, ip, and the raw line
-- `"failed" if "Failed password" in line else "accepted"` — determines the status in one line
-- We return `entries` so other files like `detector.py` and `app.py` can use it
+- `re.search(r'from (\d+\.\d+\.\d+\.\d+)', line)` — finds the IP by looking for the word `from` followed by four numbers separated by dots. Doesn't matter what position it's at.
+- `re.search(r'for (?:invalid user )?(\w+) from', line)` — finds the username by looking for the pattern `for [optional: invalid user] username from`
+- `re.search(r'^(\w+\s+\d+\s+[\d:]+)', line)` — finds the timestamp at the start of the line
+- If any of these fail to match, we skip the line with a warning instead of crashing
+
 """
