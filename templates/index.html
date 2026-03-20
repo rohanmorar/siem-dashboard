@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SIEM Dashboard</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+
+  <h1>SIEM Dashboard</h1>
+  <p class="subtitle">auth.log — real-time threat detection</p>
+
+  <div class="stats">
+    <div class="stat-card">
+      <div class="label">Total log entries</div>
+      <div class="value">{{ stats.total_entries }}</div>
+    </div>
+    <div class="stat-card danger">
+      <div class="label">Failed logins</div>
+      <div class="value">{{ stats.total_failed }}</div>
+    </div>
+    <div class="stat-card success">
+      <div class="label">Accepted logins</div>
+      <div class="value">{{ stats.total_accepted }}</div>
+    </div>
+    <div class="stat-card warning">
+      <div class="label">Active alerts</div>
+      <div class="value">{{ stats.total_alerts }}</div>
+    </div>
+  </div>
+
+  <h2>Active Alerts</h2>
+
+  {% if alerts %}
+    {% for alert in alerts %}
+    <div class="alert-card">
+      <div class="alert-header">
+        <span class="alert-ip">{{ alert.ip }}</span>
+        <span class="alert-count">{{ alert.count }} attempts</span>
+      </div>
+      <div class="alert-meta">
+        <div class="meta-item">
+          <div class="meta-label">First seen</div>
+          <div class="meta-value">{{ alert.first_seen }}</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-label">Last seen</div>
+          <div class="meta-value">{{ alert.last_seen }}</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-label">Usernames tried</div>
+          <div class="meta-value">{{ alert.users | join(", ") }}</div>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  {% else %}
+    <div class="no-alerts">No alerts — system clean.</div>
+  {% endif %}
+
+</body>
+</html>

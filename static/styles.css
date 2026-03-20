@@ -1,0 +1,121 @@
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    font-family: monospace;
+    background: #0a0e1a;
+    color: #c9d1d9;
+    padding: 32px;
+}
+
+h1 {
+    font-size: 20px;
+    color: #58a6ff;
+    margin-bottom: 8px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+.subtitle {
+    font-size: 12px;
+    color: #484f58;
+    margin-bottom: 32px;
+}
+
+.stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 32px;
+}
+
+.stat-card {
+    background: #161b22;
+    border: 1px solid #21262d;
+    border-radius: 8px;
+    padding: 20px;
+}
+
+.stat-card .label {
+    font-size: 11px;
+    color: #484f58;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+}
+
+.stat-card .value {
+    font-size: 28px;
+    font-weight: bold;
+    color: #c9d1d9;
+}
+
+.stat-card.danger .value { color: #f85149; }
+.stat-card.success .value { color: #3fb950; }
+.stat-card.warning .value { color: #d29922; }
+
+h2 {
+    font-size: 13px;
+    color: #58a6ff;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 16px;
+}
+
+.no-alerts {
+    background: #161b22;
+    border: 1px solid #21262d;
+    border-radius: 8px;
+    padding: 24px;
+    color: #3fb950;
+    font-size: 13px;
+}
+
+.alert-card {
+    background: #161b22;
+    border: 1px solid #f8514940;
+    border-left: 3px solid #f85149;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 12px;
+}
+
+.alert-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.alert-ip {
+    font-size: 16px;
+    font-weight: bold;
+    color: #f85149;
+}
+
+.alert-count {
+    background: #f8514920;
+    color: #f85149;
+    border: 1px solid #f8514940;
+    border-radius: 4px;
+    padding: 4px 10px;
+    font-size: 12px;
+}
+
+.alert-meta {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+}
+
+.meta-item .meta-label {
+    font-size: 10px;
+    color: #484f58;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 4px;
+}
+
+.meta-item .meta-value {
+    font-size: 12px;
+    color: #8b949e;
+}
