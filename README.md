@@ -2,7 +2,7 @@
 
 A lightweight Security Information and Event Management (SIEM) dashboard built with Python and Flask. Parses Linux auth logs, detects brute force login attempts, and displays flagged IPs with forensic detail in a web interface.
 
-![Dashboard Preview](static\siem-dashboard.png)
+![Dashboard Preview](static/siem-dashboard.png)
 
 ## Features
 
